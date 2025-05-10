@@ -43,6 +43,10 @@ def dm01():
 
     # 6. 打印一下x的值(权重) 和 x的梯度值.
     print(f'x.data: {x.data}, x.grad: {x.grad}')  # 10, 40
+    # .data 可以获取一个与原始张量共享数据但不参与计算图的张量。
+    print(f"x.data的类型：{type(x.data)}")      # <class 'torch.Tensor'>
+    print(f"x.grad的类型：{type(x.grad)}")      # <class 'torch.Tensor'>
+
 
     # 7. 假设学习率是0.01, 结合 梯度更新公式: W1 = W0 - lr * grad
     x.data = x.data - 0.01 * x.grad
