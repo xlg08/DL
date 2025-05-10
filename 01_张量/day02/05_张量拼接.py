@@ -13,6 +13,7 @@ import torch
 
 # 定义函数, 演示 cat()函数.
 def dm01():
+
     # 1. 随机获取到2个张量.
     t1 = torch.randint(1, 10, (2, 3))
     print(f't1: {t1}')
