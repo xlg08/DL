@@ -26,3 +26,6 @@ print(linear.weight)
 
 # 正态分布随机初始化
 nn.init.normal_(linear.weight, mean=0, std=1)       # 均值为0  标准差为1
+
+print("*******************************************")
+print(nn.init.ones_(linear.weight))
