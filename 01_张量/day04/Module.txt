@@ -1,0 +1,51 @@
+
+    初始化模块属性 --> 设置training状态为True
+    super().__setattr__("training", True)
+
+    初始化模块属性 --> 初始化_parameters为空字典
+    super().__setattr__("_parameters", {})
+
+    初始化模块属性 --> 初始化_buffers为空字典
+    super().__setattr__("_buffers", {})
+
+    初始化模块属性 --> 初始化_non_persistent_buffers_set为空集合
+    super().__setattr__("_non_persistent_buffers_set", set())
+
+    初始化模块属性 --> 初始化_backward_pre_hooks为空有序字典
+    super().__setattr__("_backward_pre_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_backward_hooks为空有序字典
+    super().__setattr__("_backward_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_is_full_backward_hook为None
+    super().__setattr__("_is_full_backward_hook", None)
+
+    初始化模块属性 --> 初始化_forward_hooks为空有序字典
+    super().__setattr__("_forward_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_forward_hooks_with_kwargs为空有序字典
+    super().__setattr__("_forward_hooks_with_kwargs", OrderedDict())
+
+    初始化模块属性 --> 初始化_forward_hooks_always_called为空有序字典
+    super().__setattr__("_forward_hooks_always_called", OrderedDict())
+
+    初始化模块属性 --> 初始化_forward_pre_hooks为空有序字典
+    super().__setattr__("_forward_pre_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_forward_pre_hooks_with_kwargs为空有序字典
+    super().__setattr__("_forward_pre_hooks_with_kwargs", OrderedDict())
+
+    初始化模块属性 --> 初始化_state_dict_hooks为空有序字典
+    super().__setattr__("_state_dict_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_state_dict_pre_hooks为空有序字典
+    super().__setattr__("_state_dict_pre_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_load_state_dict_pre_hooks为空有序字典
+    super().__setattr__("_load_state_dict_pre_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_load_state_dict_post_hooks为空有序字典
+    super().__setattr__("_load_state_dict_post_hooks", OrderedDict())
+
+    初始化模块属性 --> 初始化_modules为空字典
+    super().__setattr__("_modules", {})

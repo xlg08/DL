@@ -70,11 +70,12 @@ if __name__ == '__main__':
     print(f'my_data: {my_data}')
 
     # 3. 测试模型对象, 看是否OK.
-    output = my_model(my_data)  # 底层会自动调用 forward()函数
+    output = my_model(my_data)              # 底层会自动调用 forward()函数
     print(f'output: {output}')
     print('-' * 24)
 
     # 4. 查看模型结构.
+
     # 参1: (要被查看的)模型对象, 参2: 模型的输入维度(每行样本的特征数量)
     summary(my_model, (3,), 5)
     print('-' * 24)
