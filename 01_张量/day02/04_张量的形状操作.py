@@ -48,7 +48,7 @@ def dm01():
 
     # 3. 改变形状, 总元素个数变了.
     # t5 = t1.reshape(2, 6)   # 报错
-    t5 = t1.reshape(2, 4)     # 报错
+    t5 = t1.reshape(2, 4)  # 报错
     print(f't5: {t5}')
 
 
@@ -59,11 +59,11 @@ def dm02():
     print(f't1: {t1}, t1.shape: {t1.shape}')
 
     # 2. 在0轴上, 增加形状为1的维度.
-    t2 = t1.unsqueeze(dim=0)    # t2: [1, 5]
+    t2 = t1.unsqueeze(dim=0)  # t2: [1, 5]
     print(f't2: {t2}, t2.shape: {t2.shape}')
 
     # 3. 在1轴上, 删除形状为1的维度.
-    t3 = t1.unsqueeze(dim=1)    # t3: [5, 1]
+    t3 = t1.unsqueeze(dim=1)  # t3: [5, 1]
     print(f't3: {t3}, t3.shape: {t3.shape}')
 
     # 4. 尝试在2维上增加形状为1的维度.   报错, 不能处理没有的维度.
@@ -80,17 +80,18 @@ def dm02():
     print(f't6: {t6}, t6.shape: {t6.shape}')
 
     t7 = t6.squeeze()
-    print(f't7: {t7}, t7.shape: {t7.shape}')    # [2, 3, 5]
+    print(f't7: {t7}, t7.shape: {t7.shape}')  # [2, 3, 5]
 
     t8 = t6.squeeze(dim=1)
-    print(f't8: {t8}, t8.shape: {t8.shape}')    # (2, 3, 1, 5)
+    print(f't8: {t8}, t8.shape: {t8.shape}')  # (2, 3, 1, 5)
+
 
 # 3. 定义函数, 演示 transpose(), permute()函数.
 def dm03():
     # 1. 创建3维张量.
     t1 = torch.randint(1, 10, (2, 3, 5))
     # t1 = torch.tensor(np.random.randint(1, 10, (2, 3, 5)))
-    print(f't1: {t1}, t1.shape: {t1.shape}')        # (2, 3, 5)
+    print(f't1: {t1}, t1.shape: {t1.shape}')  # (2, 3, 5)
 
     # 2. 需求1: 交换0轴 和 1轴.  (2, 3, 5) -> (3, 2, 5)
     t2 = t1.transpose(dim0=0, dim1=1)
@@ -110,16 +111,16 @@ def dm04():
     # 2. 用transpose()修改形状.
     # 数据: (1, 2, 3, 4, 5, 6) -> (1, 4, 2, 5, 3, 6)
     t2 = t1.transpose(dim0=0, dim1=1)
-    print(f't2: {t2}, t2.shape: {t2.shape}')    # (3, 2)
+    print(f't2: {t2}, t2.shape: {t2.shape}')  # (3, 2)
 
     # 3. 判断 张量 是否连续, 即: 张量在底层的存储顺序 和 张量中的逻辑顺序是否一致.
-    print(t1.is_contiguous())   # True
-    print(t2.is_contiguous())   # False
+    print(t1.is_contiguous())  # True
+    print(t2.is_contiguous())  # False
     print('-' * 24)
 
     # 4. 修改t1张量的形状.
-    t4 = t1.view(3, 2)          # 从(2, 3) -> (3, 2)
-    print(t4.is_contiguous())   # T rue
+    t4 = t1.view(3, 2)  # 从(2, 3) -> (3, 2)
+    print(t4.is_contiguous())  # T rue
     print(f't4: {t4}, t4.shape: {t4.shape}')
 
     # 5. 尝试修改t2形状, 错误.
@@ -128,12 +129,11 @@ def dm04():
 
     # 6. 先通过 contiguous() 把t2 -> 连续的 -> view()改变形状.
     t6 = t2.contiguous().view(2, 3)
-    print(t6.is_contiguous())       # True
+    print(t6.is_contiguous())  # True
     print(f't6: {t6}, t6.shape: {t6.shape}')
 
 
 def dm08():
-
     np.random.seed(24)
     t1 = torch.tensor(np.random.randint(1, 10, (2, 3, 5)))
     print(t1.shape)
@@ -146,8 +146,10 @@ def dm08():
     t4 = t3.transpose(dim0=2, dim1=1)
     print(t4.shape)
 
-    t5 = t1.permute(dims=(2,0,1))
+    t5 = t1.permute(dims=(2, 0, 1))
     print(t5.shape)
+
+
 # 5. 测试
 if __name__ == '__main__':
     # dm01()
