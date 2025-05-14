@@ -49,7 +49,9 @@ import torch
 scores = torch.tensor([[0.3, 0.24, 5, -3.1], [-0.1, 0.56, 2.4, 0.35]] )
 
 # 2.通过softmax激活函数来实现多分类. dim = 0, 按行计算
-probabilities = torch.softmax(scores, dim=0)
+probabilities = torch.softmax(scores, dim=0)        # 计算概率
+
 # 3. 输出结果.
 print(probabilities)
-
+# tensor([      [0.5987, 0.4207, 0.9309, 0.0308],
+#               [0.4013, 0.5793, 0.0691, 0.9692]        ])
