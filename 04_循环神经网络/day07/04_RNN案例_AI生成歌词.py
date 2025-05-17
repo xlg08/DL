@@ -57,15 +57,21 @@ def build_vocab():
     # 6. 遍历每一行的分词结果.
     for words in all_words:  # words -> 该行的分词结果.
         # 6.1 定义变量, 记录: (当前这句话)的词索引列表.
-        tmp = []
+        tmp = []       # 每句话的词索引缓存列表
         # 6.2 获取每一行的词, 并获取相应的索引.
         for word in words:      # word -> 该行的每一个词.
             # 6.3 把该词对应的索引, 添加到tmp中.
             tmp.append(word_to_index[word])         # 根据词表找到每一个词的索引
-        # 6.4 每行词之间, 添加空格隔开.
-        tmp.append(word_to_index[' '])      # 2 一句话之后加一个空格，用于区分一句话，也因为在原歌曲中本身就是空格隔开的话
+
+        # 6.4 每行词之间, 添加空格隔开.  空格也要转化为索引，放到此索引列表中
+        #   句话之后加一个空格，用于区分一句话，也因为在原歌曲中本身就是空格隔开的话
+        tmp.append(word_to_index[' '])
+
         # 6.5 把tmp添加到all_index中.
-        corpus_idx.extend(tmp)
+        corpus_idx.extend(tmp)      # 将每句话的词索引列表合并为一个新的词索引列表
+
+    # print(f"歌曲词索引列表：", corpus_idx)
+    # print(f"歌曲词索引列表的长度：", len(corpus_idx))            # 49135
 
     # 7. 返回结果: (1) 所有去重后词的列表; (2) 词表; (3) (去重后)词的个数; (4) 词索引列表: 所有文本都用 词索引替换后的结果. .
     return unique_words, word_to_index, word_count, corpus_idx
@@ -73,8 +79,10 @@ def build_vocab():
 
 # 2. 创建数据集.
 class LyricsDataset(torch.utils.data.Dataset):
+
     # 1. 初始化词索引, 词个数等...
     def __init__(self, corpus_idx, num_chars):
+
         # 1.1 文档数据中的词索引.
         self.corpus_idx = corpus_idx
         # 1.2 每个句子中的词的个数
@@ -82,6 +90,7 @@ class LyricsDataset(torch.utils.data.Dataset):
         # 1.3 文档数据中词的数量, 不去重.
         self.word_count = len(corpus_idx)
         # 1.4. 计算句子的数量.
+        #   几句话   =  文档中词的数量    // 每句话词的数量
         self.number = self.word_count // self.num_chars
 
     # 2. 当使用 len(obj)时, 会自动调用 __len__()这个魔法方法.
@@ -90,7 +99,13 @@ class LyricsDataset(torch.utils.data.Dataset):
 
     # 3. 当使用 obj[index]时, 会自动调用 __getitem__()这个魔法方法.
     def __getitem__(self, idx):
+
         # 3.1 确保索引的 start值, 是在合法范围内的.
+        # 开始索引：
+        #   1.最小也要从零开始，只考虑从前向后的正索引，不考虑从后向前的负索引
+        #   2.其次，最后要到倒数第二个结束，不能到最后一个
+        #       因为，
+        #                          文档中词的数量  -  每句话词的数量   - 1
         start = min(max(idx, 0), self.word_count - self.num_chars - 1)
         # 3.2 计算当前样本的结束索引.
         end = start + self.num_chars
@@ -104,8 +119,9 @@ class LyricsDataset(torch.utils.data.Dataset):
 
 # 3. 搭建网络模型.
 class TextGenerator(nn.Module):
+
     # 1. 初始化方法.
-    def __init__(self, unique_word_count):  # 去重后词的数量 -> 5703
+    def __init__(self, unique_word_count):          # 去重后词的数量 -> 5703
         # 1.1 初始化父类成员.
         super().__init__()
         # 1.2 构建词嵌入层.
@@ -243,7 +259,7 @@ if __name__ == '__main__':
     # print(f'词索引列表 -> 当前文档中每个词对应的索引: {corpus_idx}')
 
     # 2. 构建数据集.
-    dataset = LyricsDataset(corpus_idx, num_chars=5)  # 1句话5个词.
+    # dataset = LyricsDataset(corpus_idx, num_chars=5)  # 1句话5个词.
     # print(f'句子的数量: {len(dataset)}')
 
     # x, y = dataset[0]   # 第1句话的5个词, x: 输入, y: 输出
@@ -251,10 +267,10 @@ if __name__ == '__main__':
     # print(f'输出值: {y}')
 
     # 3. 构建 循环神经网络模型.
-    model = TextGenerator(word_count)
+    # model = TextGenerator(word_count)
 
     # 4. 模型训练.
-    train_model()
+    # train_model()
 
     # 5. 模型测试.
     # evaluate_model('', 50)
