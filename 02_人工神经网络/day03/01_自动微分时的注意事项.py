@@ -49,3 +49,6 @@ print('-' * 24)
 # 7. 链式编程.
 t3 = t1.detach().numpy()     
 print(f't3: {t3}')
+
+
+

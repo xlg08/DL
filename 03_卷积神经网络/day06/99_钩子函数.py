@@ -67,11 +67,11 @@ class PhonePriceModel(nn.Module):
 
         # 1.2 搭建神经网络.
         # 隐藏层1
-        self.linear1 = nn.Linear(input_dim, 256)
+        self.linear1 = nn.Linear(input_dim, 128)
         # 隐藏层2
-        self.linear2 = nn.Linear(256, 128)
+        self.linear2 = nn.Linear(128, 256)
         # 输出层
-        self.output = nn.Linear(128, output_dim)
+        self.output = nn.Linear(256, output_dim)
 
     # 2. 前向(正向)传播, 输入层 -> 隐藏层 -> 输出层.
     def forward(self, x):
@@ -92,6 +92,12 @@ class PhonePriceModel(nn.Module):
         # 2.4 返回结果.
         return x
 
+def first(a,b,c):
+    print(f"参数a: {a}")
+    print(f"参数b: {b}")
+    print(f"参数c: {c}")
+    print(f"前向计算开始！")
+
 
 # 3. 模型训练.
 def train_model(train_dataset, input_dim, output_dim):
@@ -101,6 +107,9 @@ def train_model(train_dataset, input_dim, output_dim):
 
     # 2. 创建模型对象.
     model = PhonePriceModel(input_dim, output_dim)
+
+    # 将first方法注册为前向后钩子函数，用于在模型前向传播计算完后时执行。
+    model.register_forward_hook(first)
 
     # 3. 创建损失函数, 因为是多分类问题, 所以损失函数用的是: CrossEntropyLoss(多分类交叉熵损失) = softmax() + 损失计算.
     criterion = nn.CrossEntropyLoss()
@@ -140,7 +149,7 @@ def train_model(train_dataset, input_dim, output_dim):
 
     # 7. 模型保存.
     # 参1: 模型对象(的参数), 参2: 保存模型的文件名.
-    torch.save(model.state_dict(), '../../model/手机价格预测.pth')    # model文件夹必须存在.
+    torch.save(model.state_dict(), './model/手机价格预测.pth')    # model文件夹必须存在.
     # print(model.state_dict())
 
 
@@ -154,7 +163,7 @@ def evaluate_model(test_dataset, input_dim, output_dim):
     model = PhonePriceModel(input_dim, output_dim)
 
     # 3. 加载(训练好的)模型参数.
-    model.load_state_dict(torch.load('../../model/手机价格预测.pth'))
+    model.load_state_dict(torch.load('./model/手机价格预测.pth'))
 
     # 4. 定义变量, 记录: 预测正确的样本数.
     correct = 0
