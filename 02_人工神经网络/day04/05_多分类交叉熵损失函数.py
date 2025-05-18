@@ -27,6 +27,7 @@ import torch.nn as nn
 
 # 1. 定义函数, 演示: 多分类交叉熵损失函数.
 def dm01():
+
     # 1. 定义真实值, 可以是: one-hot, 也可以是: 索引.
     # 热(one-hot)编码处理后的值.
     # y_true = torch.tensor([[0, 1, 0], [0, 0, 1]], dtype=torch.float)   # 第1个样本: B类, 第2个样本: C类

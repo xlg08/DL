@@ -30,13 +30,11 @@ def dm01():
     # 1. 定义真实值
     y_true = torch.tensor([2.0, 2.0, 2.0], dtype=torch.float)
 
-
     # 2. 定义预测值(概率)
     y_pred = torch.tensor([1.2, 1.7, 1.9], requires_grad=True, dtype=torch.float)
 
     # 3. 定义回归(MAE)损失函数.
     criterion = nn.L1Loss()
-
 
     # 4. 计算回归(MAE)损失函数.
     loss = criterion(y_pred, y_true)

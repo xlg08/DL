@@ -128,7 +128,7 @@ class TextGenerator(nn.Module):
         # 参1: 输入的词的数量(5703), 参2: 词向量的维度(128), 会得到: 5703行 * 128列
         self.ebd = nn.Embedding(unique_word_count, 128)
 
-        # 1.3 构建RNN层.
+        # 1.3 构建RNN层.   循环网络层
         # 参1: 词向量维度(128), 参2: 隐藏层的维度(256), 参3: 网络层数(1)
         self.rnn = nn.RNN(128, 256, 1)
 
@@ -159,6 +159,7 @@ def train_model():
 
     # 1. 构建词表.
     unique_words, word_to_index, unique_word_count, corpus_idx = build_vocab()
+
     # 2. 获取数据集
     lyrics = LyricsDataset(corpus_idx, num_chars=32)
     # 3. 创建模型对象
@@ -181,16 +182,16 @@ def train_model():
         for x, y in lyrics_dataloader:
             # 7.3 获取隐藏层.
             hidden = model.init_hidden(bs=5)
+            print(f"初始化后的隐藏状态：{hidden}")
 
             # 7.4 模型计算.
             output, hidden = model(x, hidden)
 
             # 7.5 计算损失.
             # y的形状: (batch, seq_len, 词向量维度) -> 转成一维的向量
-
+            print(f"y的初始形状：{y.shape}")
             y = torch.transpose(y, 0, 1).reshape(shape=(-1,))
             # print(f"y的形状：{y.shape}")        # torch.Size([160])
-
             loss = criterion(output, y)
 
             # 7.6 梯度清零 + 反向传播 + 参数优化.
